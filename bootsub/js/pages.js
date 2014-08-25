@@ -5,6 +5,86 @@
  *
  */
 
+var playList = []; // {"id": "xxx", "title": "xxx", "author": "xxx"}
+var currentlyPlaying = null;
+var isPaused = false;
+
+function stopPlayer() {
+    $("#player").fadeOut();
+    $("#wrap").fadeIn();
+    $("#audio").get(0).pause();
+    
+    playList = [];
+    currentlyPlaying = null;
+    isPaused = false;
+}
+
+function startNextSong() {
+    currentlyPlaying = playList.shift();
+    if (!currentlyPlaying) {
+        stopPlayer();
+        return;
+    }
+    var audioElement = $("#audio").get(0);
+    $("#cover").attr("src", getRestUrl("getCoverArt", "&id=" + currentlyPlaying.id));
+    $("#curtitle").text(currentlyPlaying.title);
+    $("#curartist").text(currentlyPlaying.artist);
+    audioElement.autoplay = true;
+    audioElement.src = getRestUrl("stream", "&id=" + currentlyPlaying.id + "&format=ogg&estimateContentLength=true");
+    audioElement.play();
+    $("#audio").one("ended", function() {
+        startNextSong();
+    });
+}
+
+function player_init() {
+    var element = $("#audio").get(0);
+    $("#pause").click(function() {
+        $("#playspan").toggleClass("glyphicon-pause");
+        $("#playspan").toggleClass("glyphicon-play");
+        if(!isPaused){
+            element.pause();
+        } else {
+            element.play();
+        }
+        isPaused = !isPaused;
+    });
+    $("#skip").click(function(){
+       startNextSong(); 
+    });
+    $("#stop").click(function(){
+       stopPlayer(); 
+    });
+}
+
+function startPlayer() {
+    $("#wrap").fadeOut();
+    $("#player").fadeIn();
+    startNextSong();
+}
+
+function playPlaylist(id) {
+    $.ajax({
+        url: getRestUrl("getPlaylist", "&id=" + id),
+        dataType: "jsonp",
+        type: "GET"
+    }).done(function(data) {
+        if (data["subsonic-response"]["status"] === "ok") {
+            var list = data["subsonic-response"]["playlist"];
+            var entry = list.entry;
+            if (!$.isArray(entry))
+                entry = [entry];
+            playList = entry.filter(function(e) {
+                return {"id": e.id, "title": e.title, "author": e.artist};
+            });
+            startPlayer();
+        } else {
+            display_subsonic_response(data['subsonic-response']);
+        }
+    });
+}
+
+
 /* This is the module for the Musik -> Interpreten menu */
 function submenu_function_list_artists() {
     $.ajax({
@@ -174,7 +254,7 @@ function submenu_function_display_klugemixes(params) {
             for (var i = 0; i < playlists.length; i++) {
                 if (playlists[i]["name"].indexOf("Kluge-Mix") === 0) {
                     tmp += "<tr>";
-                    tmp += "<td>" + playlists[i]['name'] + "</td>";
+                    tmp += "<td><a href='javascript:playPlaylist(" + playlists[i]['id'] + ")'>" + playlists[i]['name'] + "</a></td>";
                     tmp += "<td>" + display_duration(playlists[i]['duration']) + "</td>";
                     tmp += "</tr>";
                 }

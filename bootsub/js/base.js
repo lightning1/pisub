@@ -67,7 +67,10 @@ function set_local_storage(){
 }
 
 function bootsub_init(){
+    player_init();
     get_local_storage();
+    $("#player").hide();
+    
     if(config["subsonic_url"] == ""){
        $('#form_signin_url').show();
     }
