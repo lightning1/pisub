@@ -13,7 +13,7 @@ function stopPlayer() {
     $("#player").fadeOut();
     $("#wrap").fadeIn();
     $("#audio").get(0).pause();
-    
+
     playList = [];
     currentlyPlaying = null;
     isPaused = false;
@@ -42,18 +42,18 @@ function player_init() {
     $("#pause").click(function() {
         $("#playspan").toggleClass("glyphicon-pause");
         $("#playspan").toggleClass("glyphicon-play");
-        if(!isPaused){
+        if (!isPaused) {
             element.pause();
         } else {
             element.play();
         }
         isPaused = !isPaused;
     });
-    $("#skip").click(function(){
-       startNextSong(); 
+    $("#skip").click(function() {
+        startNextSong();
     });
-    $("#stop").click(function(){
-       stopPlayer(); 
+    $("#stop").click(function() {
+        stopPlayer();
     });
 }
 
@@ -72,6 +72,28 @@ function playPlaylist(id) {
         if (data["subsonic-response"]["status"] === "ok") {
             var list = data["subsonic-response"]["playlist"];
             var entry = list.entry;
+            if (!$.isArray(entry))
+                entry = [entry];
+            playList = entry.filter(function(e) {
+                return {"id": e.id, "title": e.title, "author": e.artist};
+            });
+            startPlayer();
+        } else {
+            display_subsonic_response(data['subsonic-response']);
+        }
+    });
+}
+
+// artist_id, album_id
+function playAlbum(o){
+    $.ajax({
+        url: getRestUrl("getAlbum", "&id=" + o.album_id),
+        dataType: "jsonp",
+        type: "GET"
+    }).done(function(data) {
+        if (data["subsonic-response"]["status"] === "ok") {
+            var list = data["subsonic-response"]["album"];
+            var entry = list.song;
             if (!$.isArray(entry))
                 entry = [entry];
             playList = entry.filter(function(e) {
@@ -146,7 +168,8 @@ function submenu_function_display_artist(params) {
 //                if(user['display_browser_albums'] == "list"){
             for (var i = 0; i < alben.length; i++) {
                 tmp += "<div class=\"media\">";
-                tmp += "<a class=\"pull-left\" href=\"javascript:change_menu(['Interpreten','" + artist['name'] + "','" + alben[i]['name'] + "'],";
+                tmp += "<a class=\"pull-left\" href=\"javascript:playAlbum(";
+//              tmp += "<a class=\"pull-left\" href=\"javascript:change_menu(['Interpreten','" + artist['name'] + "','" + alben[i]['name'] + "'],";
                 tmp += "{'artist_id': '" + artist['id'] + "', 'album_id': '" + alben[i]['id'] + "'});\">";
                 if (alben[i]['coverArt']) {
                     tmp += "<img class=\"media-object\" src=\"";
@@ -158,7 +181,8 @@ function submenu_function_display_artist(params) {
                 tmp += "</a>";
                 tmp += "<div class=\"media-body\">";
                 tmp += "<h4 class=\"media-heading\">";
-                tmp += "<a href=\"javascript:change_menu(['Interpreten','" + artist['name'] + "','" + alben[i]['name'] + "'],";
+                tmp += "<a href=\"javascript:playAlbum(";
+//                tmp += "<a href=\"javascript:change_menu(['Interpreten','" + artist['name'] + "','" + alben[i]['name'] + "'],";
                 tmp += "{'artist_id': '" + artist['id'] + "', 'album_id': '" + alben[i]['id'] + "'});\">" + alben[i]['name'] + "</a>";
                 tmp += "</h4>";
                 tmp += "Songs: " + alben[i]['songCount'] + "<br />";
