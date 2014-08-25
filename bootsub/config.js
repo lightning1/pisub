@@ -13,6 +13,7 @@ var config = {
 
 var menu = {
     "Kluge-Mixe": {
+        "onLoad": "submenu_function_display_klugemixes()"
     },
     "Interpreten": {
         "onLoad": "submenu_function_list_artists()",
@@ -31,7 +32,9 @@ var menu = {
             }
         }
     },
-    "Genres": {},
+    "Genres": {
+        "onLoad": "submenu_function_display_genres()"
+    },
     "Suche": {
         "display": "none"
     }
