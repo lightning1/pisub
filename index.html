@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="de">
+  <head>
+    <meta charset="utf-8">
+    <title>Bootsub</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="Felix Kluge">
+
+    <!-- jquery -->
+    <script src="jquery/jquery.js"></script>
+
+    <!-- jquery ui -->
+    <link rel="stylesheet" href="jqueryui/themes/base/jquery.ui.all.css" />
+    <script src="jqueryui/ui/jquery.ui.core.js"></script>
+    <script src="jqueryui/ui/jquery.ui.widget.js"></script>
+
+    <!-- coverflow -->
+    <script type="text/javascript" src="coverflow/js/coverflow.js"></script>
+    <link rel="stylesheet" href="coverflow/css/coverflow.css" />
+
+    <!-- bootstrap -->
+    <script src="bootstrap/js/bootstrap.js"></script>
+    <link href="bootstrap/css/bootstrap.css" rel="stylesheet">
+    <link href="bootstrap/css/bootstrap-responsive.css" rel="stylesheet">
+
+    <!-- bootsub -->
+    <link href="bootsub/css/base.css" rel="stylesheet" />
+    <script src="bootsub/js/base.js"></script>
+    <script src="bootsub/js/pages.js"></script>
+    <script src="bootsub/config.json"></script>
+  </head>
+
+  <body onLoad="bootsub_init();">
+	<div class="container" id="content_login">
+		<div id="notifications_login"></div>
+      		<form class="form-signin">
+			<fieldset>
+        		<h2 class="form-signin-heading">Bootsub Login</h2>
+	                <input type="text" class="input-large form-control" placeholder="Subsonic-URL" id="form_signin_url" />
+        		<input type="text" class="input-large form-control" placeholder="Username" id="form_signin_username" />
+        		<input type="password" class="input-large form-control" placeholder="Password" id="form_signin_password" />
+        		<label class="checkbox">
+          			<input type="checkbox" id="form_signin_autologin" value="yes"> Eingeloggt bleiben
+        		</label>
+        		<input class="btn btn-large btn-primary" type="button" onClick="login();" value="Login" />
+			</fieldset>
+      		</form>
+	</div>
+
+	<div id="wrap">
+
+    		<div class="container" id="content_main" style="display:none;">
+
+      		<div class="masthead">
+        		<div class="navbar navbar-default navbar-fixed-top" role="navigation">
+          			<div class="navbar-inner">
+            				<div class="container">
+	      					<a class="navbar-brand" href="#">Bootsub</a>
+              					<ul class="nav navbar-nav navbar-left" id="main_menu">
+      							<li class="dropdown"  id="navbar_Musik">
+        							<a href="#" class="dropdown-toggle" data-toggle="dropdown"><span onClick="change_menu('Musik','');">Musik</span> <b class="caret"></b></a>
+        							<ul class="dropdown-menu">
+          								<li><a href="javascript:change_menu('Musik','Interpreten');">Interpreten</a></li>
+          								<li><a href="#">Another action</a></li>
+          								<li><a href="#">Something else here</a></li>
+          								<li class="divider"></li>
+          								<li><a href="#">Separated link</a></li>
+          								<li class="divider"></li>
+          								<li><a href="#">One more separated link</a></li>
+        							</ul>
+      							</li>
+                					<li id="navbar_Filme"><a href="javascript:change_menu('Filme','');">Filme</a></li>
+                					<li id="navbar_Serien"><a href="javascript:change_menu('Serien','');">Serien</a></li>
+                					<li id="navbar_Podcasts"><a href="javascript:change_menu('Podcasts','');">Podcasts</a></li>
+              					</ul>
+<!--						<form class="navbar-form navbar-right" role="search">
+  							<div class="form-group">
+    								<input type="text" class="form-control" placeholder="Suchen">
+  							</div>
+  							<button type="submit" class="btn btn-default">Submit</button>
+						</form>
+-->
+            				</div>
+          			</div>
+        		</div>
+      		</div>
+
+
+		<div id="notifications"></div>
+
+
+		<div>
+			<ol class="breadcrumb" id="main_breadcrumb">
+                        </ol>
+		</div>
+
+		<div id="container_Musik" class="bootsub_container">
+			<h2>Musik</h2>
+			<table class="table">
+				<thead>
+					<tr>
+						<th>#</th><th>Song</th><th>Künstler</th><th>Aktion</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td>1</td><td>song1</td><td>Linkin Park</td>
+						<td>
+							<span class="glyphicon glyphicon-play" />
+							<span class="glyphicon glyphicon-plus" />
+							<span class="glyphicon glyphicon-star" />
+						</td>
+					</tr>
+					<tr>
+						<td>2</td><td>song2</td><td>Linkin Park</td><td># # #</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+
+		<div id="container_Musik_Interpreten" class="bootsub_container">
+			<div class="form-group">
+				<form>
+				<select class="input-medium" onChange="user['display_pagination_mode'] = this.value; set_local_storage(); submenu_function_list_artists();">
+					<option value="picture">Komplett</option>
+					<option value="simple">Liste</option>
+				</select>
+				</form>
+			</div>
+			<div id="container_Musik_Interpreten_pager" style="margin:auto;"></div>
+			<div id="container_Musik_Interpreten_pagercontent"></div>
+		</div>
+
+        <div id="container_Musik_Interpreten_Interpret" class="bootsub_container">
+            <h2>Ein toller Interpret.</h2>
+        </div>
+
+        <div id="container_Musik_Interpreten_Interpret_Album" class="bootsub_container">
+            <h2>Ein tolles Album.</h2>
+        </div>
+
+		<div id="container_Suche" class="bootsub_container">
+	        	<h2>Durchsuche Medien</h2>
+			<br />
+			<div class="checkbox">
+				<label class="checkbox-inline">		
+					<input type="checkbox" /> Musik
+				</label>
+				<label class="checkbox-inline">		
+					<input type="checkbox" /> Filme
+				</label>
+				<label class="checkbox-inline">		
+					<input type="checkbox" /> Serien
+				</label>
+				<label class="checkbox-inline">		
+					<input type="checkbox" /> Podcasts
+				</label>
+			</div>
+			<p><input type="text" class="input-large" /></p>
+        		<p><a class="btn btn-large btn-success" href="#">Suchen!</a></p>
+      		</div>
+
+		<div id="container_Filme" class="bootsub_container">
+		<h2>Filme</h2>
+		</div>
+
+		<div id="container_Podcasts" class="bootsub_container">
+		<h2>Podcasts</h2>
+		</div>
+
+		<div id="container_Serien" class="bootsub_container">
+		<h2>Serien</h2>
+		</div>
+
+		<div id="push"></div>
+	</div>
+
+	</div>
+
+	<div id="footer">
+	</div>
+
+  </body>
+</html>
+ 
