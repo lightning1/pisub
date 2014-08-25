@@ -248,6 +248,8 @@ function submenu_function_display_album(params) {
             } else {
                 songs = album["song"];
             }
+        });
+}
 
 /* Here comes the view for the Kluge-Mixes */
 function submenu_function_display_klugemixes(params){
@@ -258,40 +260,39 @@ function submenu_function_display_klugemixes(params){
         dataType: "jsonp",
         type: "GET"
     }).done(function(data){
-            if(data["subsonic-response"]["status"] == "ok"){
-                var tmp = "";
+        if(data["subsonic-response"]["status"] == "ok"){
+            var tmp = "";
 
-                var playlists = data["subsonic-response"]["playlists"]["playlist"];
+            var playlists = data["subsonic-response"]["playlists"]["playlist"];
+            if (!$.isArray(playlists)) {
+                playlists = [playlists];
+            }
 
-
-                tmp += "<table class=\"table\">";
-                tmp += "<thead>";
-                tmp += "<tr><th>Name</th><th>Länge</th></tr>";
-                tmp += "</thead>";
-                tmp += "<tbody>";
-                for (var i=0; i<playlists.length; i++){
-                    if(playlists[i]["name"].substr(0, 9) == "Kluge-Mix"){
-                        tmp += "<tr>";
-                        tmp += "<td><a href=\"javascript:change_menu(['Kluge-Mixe','Album'],";
-                        tmp += "{'playlist_id': '"+playlists[i]['id']+"'});\">"+playlists[i]['name']+"</a></td>";
-                        tmp += "<td>"+display_duration(playlists[i]['duration'])+"</td>";
-                        tmp += "</tr>";
-                    }
+            tmp += "<table class=\"table\">";
+            tmp += "<thead>";
+            tmp += "<tr><th>Name</th><th>Länge</th></tr>";
+            tmp += "</thead>";
+            tmp += "<tbody>";
+            for (var i=0; i<playlists.length; i++){
+                if(playlists[i]["name"].substr(0, 9) == "Kluge-Mix"){
+                    tmp += "<tr>";
+                    tmp += "<td><a href=\"javascript:change_menu(['Kluge-Mixe','Album'],";
+                    tmp += "{'playlist_id': '"+playlists[i]['id']+"'});\">"+playlists[i]['name']+"</a></td>";
+                    tmp += "<td>"+display_duration(playlists[i]['duration'])+"</td>";
+                    tmp += "</tr>";
                 }
-                tmp += "</tbody>";
-                tmp += "</table>";
-
-                $('#container_Kluge-Mixe').html(tmp);
-            } else {
-                display_subsonic_response(data['subsonic-response']);
             }
             tmp += "</tbody>";
             tmp += "</table>";
 
-            $('#container_Interpreten_Interpret_Album').html(tmp);
+            $('#container_Kluge-Mixe').html(tmp);
         } else {
             display_subsonic_response(data['subsonic-response']);
         }
+        tmp += "</tbody>";
+        tmp += "</table>";
+
+        $('#container_Interpreten_Interpret_Album').html(tmp);
         mutex = false;
     });
 }
@@ -305,13 +306,11 @@ function submenu_function_display_klugemixes_album(params){
         dataType: "jsonp",
         type: "GET"
     }).done(function(data) {
-        if (data["subsonic-response"]["status"] === "ok") {
             var tmp = "";
-      
-            var playlist = data["subsonic-response"]["playlists"]["playlist"];
-            if (!$.isArray(playlists)) {
-                playlists = [playlists];
-            }
+
+            var playlist = data["subsonic-response"]["playlist"];
+
+            if (data["subsonic-response"]["status"] === "ok") {
 
                 var songs = new Array();
 
@@ -347,9 +346,7 @@ function submenu_function_display_klugemixes_album(params){
             tmp += "</table>";
 
             $('#container_Kluge-Mixe').html(tmp);
-        } else {
-            display_subsonic_response(data['subsonic-response']);
-        }
+
         mutex = false;
     });
 }
