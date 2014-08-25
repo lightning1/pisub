@@ -29,6 +29,10 @@ function startNextSong() {
     $("#cover").attr("src", getRestUrl("getCoverArt", "&id=" + currentlyPlaying.id));
     $("#curtitle").text(currentlyPlaying.title);
     $("#curartist").text(currentlyPlaying.artist);
+    setTimeout(function(){
+        $(".playlistitem").removeClass("danger");
+        $("#p" + currentlyPlaying.id).addClass("danger");
+    }, 5);
     audioElement.autoplay = true;
     audioElement.src = getRestUrl("stream", "&id=" + currentlyPlaying.id + "&format=ogg&estimateContentLength=true");
     audioElement.play();
@@ -60,6 +64,14 @@ function player_init() {
 function startPlayer() {
     $("#wrap").fadeOut();
     $("#player").fadeIn();
+    var s = "<tr><th style='width: 50px;'>Nummer</th><th>Name</th></tr>";
+    var i = 1;
+    playList.forEach(function(o) {
+        s += "<tr id='p" + o.id + "' class='playlistitem'><td>" + i + "</td><td>" + o.title + "</td></tr>";
+        i++;
+    });
+
+    $("#curplaylist").html(s);
     startNextSong();
 }
 
@@ -85,7 +97,7 @@ function playPlaylist(id) {
 }
 
 // artist_id, album_id
-function playAlbum(o){
+function playAlbum(o) {
     $.ajax({
         url: getRestUrl("getAlbum", "&id=" + o.album_id),
         dataType: "jsonp",
@@ -220,47 +232,47 @@ function submenu_function_display_album(params) {
 
             var songs = new Array();
 
-                if(album["songCount"] == "1"){
-                    songs[0] = album["song"];
-                } else {
-                    songs = album["song"];
-                }
-
-                tmp += "<table class=\"table\">";
-                tmp += "<thead>";
-                tmp += "<tr><th>#</th><th>Song</th><th>Künstler</th><th>Länge</th><th>Aktion</th></tr>";
-                tmp += "</thead>";
-                tmp += "<tbody>";
-                for(var i=0; i<songs.length; i++){
-                    tmp += "<tr>";
-                    tmp += "<td>"+songs[i]['track']+"</td><td>"+songs[i]['title']+"</td><td style=\"white-space:nowrap;\">"+songs[i]['artist']+"</td>";
-                    tmp += "<td>"+display_duration(songs[i]['duration'])+"</td>";
-                    tmp += "<td style=\"white-space:nowrap;\">";
-                    tmp += "<span class=\"glyphicon glyphicon-play\" /> ";
-                    tmp += "<span class=\"glyphicon glyphicon-plus\" /> ";
-                    tmp += "</td>";
-                    tmp += "</tr>";
-                }
-                tmp += "</tbody>";
-                tmp += "</table>";
-
-                $('#container_Interpreten_Interpret_Album').html(tmp);
+            if (album["songCount"] == "1") {
+                songs[0] = album["song"];
             } else {
                 songs = album["song"];
             }
-        });
+
+            tmp += "<table class=\"table\">";
+            tmp += "<thead>";
+            tmp += "<tr><th>#</th><th>Song</th><th>Künstler</th><th>Länge</th><th>Aktion</th></tr>";
+            tmp += "</thead>";
+            tmp += "<tbody>";
+            for (var i = 0; i < songs.length; i++) {
+                tmp += "<tr>";
+                tmp += "<td>" + songs[i]['track'] + "</td><td>" + songs[i]['title'] + "</td><td style=\"white-space:nowrap;\">" + songs[i]['artist'] + "</td>";
+                tmp += "<td>" + display_duration(songs[i]['duration']) + "</td>";
+                tmp += "<td style=\"white-space:nowrap;\">";
+                tmp += "<span class=\"glyphicon glyphicon-play\" /> ";
+                tmp += "<span class=\"glyphicon glyphicon-plus\" /> ";
+                tmp += "</td>";
+                tmp += "</tr>";
+            }
+            tmp += "</tbody>";
+            tmp += "</table>";
+
+            $('#container_Interpreten_Interpret_Album').html(tmp);
+        } else {
+            songs = album["song"];
+        }
+    });
 }
 
 /* Here comes the view for the Kluge-Mixes */
-function submenu_function_display_klugemixes(params){
+function submenu_function_display_klugemixes(params) {
     mutex = true;
     user['active_arguments'] = params;
     $.ajax({
         url: getRestUrl("getPlaylists", ""),
         dataType: "jsonp",
         type: "GET"
-    }).done(function(data){
-        if(data["subsonic-response"]["status"] == "ok"){
+    }).done(function(data) {
+        if (data["subsonic-response"]["status"] == "ok") {
             var tmp = "";
 
             var playlists = data["subsonic-response"]["playlists"]["playlist"];
@@ -273,11 +285,11 @@ function submenu_function_display_klugemixes(params){
             tmp += "<tr><th>Name</th><th>Länge</th></tr>";
             tmp += "</thead>";
             tmp += "<tbody>";
-            for (var i=0; i<playlists.length; i++){
-                if(playlists[i]["name"].substr(0, 9) == "Kluge-Mix"){
+            for (var i = 0; i < playlists.length; i++) {
+                if (playlists[i]["name"].substr(0, 9) == "Kluge-Mix") {
                     tmp += "<tr>";
-                    tmp += "<td><a href=\"javascript:playPlaylist('"+playlists[i]['id']+"');\">"+playlists[i]['name']+"</a></td>";
-                    tmp += "<td>"+display_duration(playlists[i]['duration'])+"</td>";
+                    tmp += "<td><a href=\"javascript:playPlaylist('" + playlists[i]['id'] + "');\">" + playlists[i]['name'] + "</a></td>";
+                    tmp += "<td>" + display_duration(playlists[i]['duration']) + "</td>";
                     tmp += "</tr>";
                 }
             }
@@ -297,54 +309,54 @@ function submenu_function_display_klugemixes(params){
 }
 
 /* Here comes the view for one single album */
-function submenu_function_display_klugemixes_album(params){
+function submenu_function_display_klugemixes_album(params) {
     mutex = true;
     user['active_arguments'] = params;
     $.ajax({
-        url: getRestUrl("getPlaylist", "&id="+user['active_arguments']['playlist_id']),
+        url: getRestUrl("getPlaylist", "&id=" + user['active_arguments']['playlist_id']),
         dataType: "jsonp",
         type: "GET"
     }).done(function(data) {
-            var tmp = "";
+        var tmp = "";
 
-            var playlist = data["subsonic-response"]["playlist"];
+        var playlist = data["subsonic-response"]["playlist"];
 
-            if (data["subsonic-response"]["status"] === "ok") {
+        if (data["subsonic-response"]["status"] === "ok") {
 
-                var songs = new Array();
+            var songs = new Array();
 
-                if(playlist["songCount"] == "1"){
-                    songs[0] = playlist["entry"];
-                } else {
-                    songs = playlist["entry"];
-                }
-
-                tmp += "<table class=\"table\">";
-                tmp += "<thead>";
-                tmp += "<tr><th>#</th><th>Song</th><th>Künstler</th><th>Länge</th><th>Aktion</th></tr>";
-                tmp += "</thead>";
-                tmp += "<tbody>";
-                for(var i=0; i<songs.length; i++){
-                    tmp += "<tr>";
-                    tmp += "<td>"+(i+1)+"</td><td>"+songs[i]['title']+"</td><td style=\"white-space:nowrap;\">"+songs[i]['artist']+"</td>";
-                    tmp += "<td>"+display_duration(songs[i]['duration'])+"</td>";
-                    tmp += "<td style=\"white-space:nowrap;\">";
-                    tmp += "<span class=\"glyphicon glyphicon-play\" /> ";
-                    tmp += "<span class=\"glyphicon glyphicon-plus\" /> ";
-                    tmp += "</td>";
-                    tmp += "</tr>";
-                }
-                tmp += "</tbody>";
-                tmp += "</table>";
-
-                $('#container_Kluge-Mixe_Album').html(tmp);
+            if (playlist["songCount"] == "1") {
+                songs[0] = playlist["entry"];
             } else {
-                display_subsonic_response(data['subsonic-response']);
+                songs = playlist["entry"];
+            }
+
+            tmp += "<table class=\"table\">";
+            tmp += "<thead>";
+            tmp += "<tr><th>#</th><th>Song</th><th>Künstler</th><th>Länge</th><th>Aktion</th></tr>";
+            tmp += "</thead>";
+            tmp += "<tbody>";
+            for (var i = 0; i < songs.length; i++) {
+                tmp += "<tr>";
+                tmp += "<td>" + (i + 1) + "</td><td>" + songs[i]['title'] + "</td><td style=\"white-space:nowrap;\">" + songs[i]['artist'] + "</td>";
+                tmp += "<td>" + display_duration(songs[i]['duration']) + "</td>";
+                tmp += "<td style=\"white-space:nowrap;\">";
+                tmp += "<span class=\"glyphicon glyphicon-play\" /> ";
+                tmp += "<span class=\"glyphicon glyphicon-plus\" /> ";
+                tmp += "</td>";
+                tmp += "</tr>";
             }
             tmp += "</tbody>";
             tmp += "</table>";
 
-            $('#container_Kluge-Mixe').html(tmp);
+            $('#container_Kluge-Mixe_Album').html(tmp);
+        } else {
+            display_subsonic_response(data['subsonic-response']);
+        }
+        tmp += "</tbody>";
+        tmp += "</table>";
+
+        $('#container_Kluge-Mixe').html(tmp);
 
         mutex = false;
     });
@@ -362,7 +374,7 @@ function submenu_function_display_genres(params) {
         if (data["subsonic-response"]["status"] == "ok") {
             var tmp = "";
 
-                var genres = data["subsonic-response"]["genres"]["genre"];
+            var genres = data["subsonic-response"]["genres"]["genre"];
 
             tmp += "<table class=\"table\">";
             tmp += "<thead>";
