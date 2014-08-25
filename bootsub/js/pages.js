@@ -148,3 +148,122 @@ function submenu_function_display_album(params){
             mutex = false;
         });
 }
+
+/* Here comes the view for the Kluge-Mixes */
+function submenu_function_display_klugemixes(params){
+    mutex = true;
+    user['active_arguments'] = params;
+    $.ajax({
+        url: getRestUrl("getPlaylists", ""),
+        dataType: "jsonp",
+        type: "GET"
+    }).done(function(data){
+            if(data["subsonic-response"]["status"] == "ok"){
+                var tmp = "";
+
+                console.log(data["subsonic-response"]["playlists"]["playlist"]);
+
+                var playlists = data["subsonic-response"]["playlists"]["playlist"];
+
+
+                tmp += "<table class=\"table\">";
+                tmp += "<thead>";
+                tmp += "<tr><th>Name</th><th>Länge</th></tr>";
+                tmp += "</thead>";
+                tmp += "<tbody>";
+                for (var i=0; i<playlists.length; i++){
+                    if(playlists[i]["name"].substr(0, 9) == "Kluge-Mix"){
+                        tmp += "<tr>";
+                        tmp += "<td>"+playlists[i]['name']+"</td>";
+                        tmp += "<td>"+display_duration(playlists[i]['duration'])+"</td>";
+                        tmp += "</tr>";
+                    }
+                }
+                tmp += "</tbody>";
+                tmp += "</table>";
+
+                $('#container_Kluge-Mixe').html(tmp);
+            } else {
+                display_subsonic_response(data['subsonic-response']);
+            }
+            mutex = false;
+        });
+}
+
+/* Here comes the view for the Kluge-Mixes */
+function submenu_function_display_klugemixes(params){
+    mutex = true;
+    user['active_arguments'] = params;
+    $.ajax({
+        url: getRestUrl("getPlaylists", ""),
+        dataType: "jsonp",
+        type: "GET"
+    }).done(function(data){
+            if(data["subsonic-response"]["status"] == "ok"){
+                var tmp = "";
+
+                var playlists = data["subsonic-response"]["playlists"]["playlist"];
+
+
+                tmp += "<table class=\"table\">";
+                tmp += "<thead>";
+                tmp += "<tr><th>Name</th><th>Länge</th></tr>";
+                tmp += "</thead>";
+                tmp += "<tbody>";
+                for (var i=0; i<playlists.length; i++){
+                    if(playlists[i]["name"].substr(0, 9) == "Kluge-Mix"){
+                        tmp += "<tr>";
+                        tmp += "<td>"+playlists[i]['name']+"</td>";
+                        tmp += "<td>"+display_duration(playlists[i]['duration'])+"</td>";
+                        tmp += "</tr>";
+                    }
+                }
+                tmp += "</tbody>";
+                tmp += "</table>";
+
+                $('#container_Kluge-Mixe').html(tmp);
+            } else {
+                display_subsonic_response(data['subsonic-response']);
+            }
+            mutex = false;
+        });
+}
+
+/* Here comes the view for the genres */
+function submenu_function_display_genres(params){
+    mutex = true;
+    user['active_arguments'] = params;
+    $.ajax({
+        url: getRestUrl("getGenres", ""),
+        dataType: "jsonp",
+        type: "GET"
+    }).done(function(data){
+            if(data["subsonic-response"]["status"] == "ok"){
+                var tmp = "";
+
+                var genres = data["subsonic-response"]["genres"]["genre"];
+
+                console.log(genres);
+
+                tmp += "<table class=\"table\">";
+                tmp += "<thead>";
+                tmp += "<tr><th>Name</th><th>Alben</th><th>Songs</th></tr>";
+                tmp += "</thead>";
+                tmp += "<tbody>";
+                for (var i=0; i<genres.length; i++){
+                    tmp += "<tr>";
+                    tmp += "<td>"+genres[i]['content']+"</td>";
+                    tmp += "<td>"+genres[i]['albumCount']+"</td>";
+                    tmp += "<td>"+genres[i]['songCount']+"</td>";
+                    tmp += "</tr>";
+                }
+                tmp += "</tbody>";
+                tmp += "</table>";
+
+                $('#container_Genres').html(tmp);
+            } else {
+                display_subsonic_response(data['subsonic-response']);
+            }
+            mutex = false;
+        });
+}
