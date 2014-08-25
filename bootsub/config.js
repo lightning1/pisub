@@ -13,7 +13,14 @@ var config = {
 
 var menu = {
     "Kluge-Mixe": {
-        "onLoad": "submenu_function_display_klugemixes()"
+        "onLoad": "submenu_function_display_klugemixes()",
+        "submenus": {
+            "Album": {
+                "type": "catchall",
+                "display": "none",
+                "onLoad": "submenu_function_display_klugemixes_album(arguments)"
+            }
+        }
     },
     "Interpreten": {
         "onLoad": "submenu_function_list_artists()",
