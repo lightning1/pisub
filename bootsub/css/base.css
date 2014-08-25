@@ -92,6 +92,10 @@ table {
     width: 100%;
 }
 
+a span.glyphicon {
+    color: lightgrey;
+}
+
 #player {
     position: absolute;
     left: 0px;
