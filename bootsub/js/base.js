@@ -351,7 +351,7 @@ function display_pagination(pager_element, content_element, content){
 		display_message("danger", "Inhalt nicht gefunden!", "Der Pager '" + pager_element  +  "' konnte nicht gefunden werden!");
 	if(!$('#'+content_element).length > 0)
 		display_message("danger", "Inhalt nicht gefunden!", "Der Contentbrowser '"+content_element+"' vom Pager '"+pager_element+"' konnte nicht gefunden werden!");
-	tmp_pager += "<ul class=\"pagination\">";
+	tmp_pager += "<ul class=\"pagination\" >";
 	var count = 0;
 	$.each(content,function(key,value){
 		tmp_pager += "<li id=\""+pager_element+"_"+count+"\"><a href=\"javascript:display_pagination_select_page('"+pager_element+"','"+content_element+"','"+count+"');\">" + key + "</a></li>";

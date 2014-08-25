@@ -87,3 +87,7 @@ html, body {
 div.bootsub_container {
     display: none;
 }
+
+table {
+    width: 100%;
+}
