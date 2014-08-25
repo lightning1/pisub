@@ -31,7 +31,7 @@ function submenu_function_list_artists(){
                     sorted_artists[t] = c;
                 });
 
-                display_pagination('container_Musik_Interpreten_pager', 'container_Musik_Interpreten_pagercontent', sorted_artists);
+                display_pagination('container_Interpreten_pager', 'container_Interpreten_pagercontent', sorted_artists);
             } else {
                 display_subsonic_response(data['subsonic-response']);
             }
@@ -63,10 +63,11 @@ function submenu_function_display_artist(params){
                     alben = artist["album"];
                 }
 
-                if(user['display_browser_albums'] == "list"){
+//                if(user['display_browser_albums'] == "list"){
                     for(var i=0; i<alben.length; i++){
                         tmp += "<div class=\"media\">";
-                        tmp += "<a class=\"pull-left\" href=\"#\">";
+                        tmp += "<a class=\"pull-left\" href=\"javascript:change_menu(['Interpreten','"+artist['name']+"','"+alben[i]['name']+"'],";
+                        tmp += "{'artist_id': '"+artist['id']+"', 'album_id': '"+alben[i]['id']+"'});\">";
                         if(alben[i]['coverArt']){
                             tmp += "<img class=\"media-object\" src=\"";
                             tmp += getRestUrl('getCoverArt','&size=75&id='+alben[i]['coverArt']);
@@ -77,20 +78,21 @@ function submenu_function_display_artist(params){
                         tmp += "</a>";
                         tmp += "<div class=\"media-body\">";
                         tmp += "<h4 class=\"media-heading\">";
-                        tmp += "<a href=\"javascript:change_menu(['Musik','Interpreten','"+artist['name']+"','"+alben[i]['name']+"'],";
+                        tmp += "<a href=\"javascript:change_menu(['Interpreten','"+artist['name']+"','"+alben[i]['name']+"'],";
                         tmp += "{'artist_id': '"+artist['id']+"', 'album_id': '"+alben[i]['id']+"'});\">"+alben[i]['name']+"</a>";
                         tmp += "</h4>";
                         tmp += "Songs: "+alben[i]['songCount']+"<br />";
                         tmp += "Länge: "+display_duration(alben[i]['duration']);
                         tmp += "</div>";
                         tmp += "</div>";
-                        $('#container_Musik_Interpreten_Interpret').html(tmp);
                     }
-                } else {
-                    // display mode: coverflow!
-                    $('#container_Musik_Interpreten_Interpret').html(tmp);
-
-                }
+                    $('#container_Interpreten_Interpret').html(tmp);
+//                } else {
+//                    // display mode: coverflow!
+//                    alert('cover!');
+//                    $('#container_Interpreten_Interpret').html(tmp);
+//
+//                }
             } else {
                 display_subsonic_response(data['subsonic-response']);
             }
@@ -139,7 +141,7 @@ function submenu_function_display_album(params){
                 tmp += "</tbody>";
                 tmp += "</table>";
 
-                $('#container_Musik_Interpreten_Interpret_Album').html(tmp);
+                $('#container_Interpreten_Interpret_Album').html(tmp);
             } else {
                 display_subsonic_response(data['subsonic-response']);
             }

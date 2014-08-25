@@ -12,41 +12,26 @@ var config = {
 };
 
 var menu = {
-    "Musik": {
+    "Kluge-Mixe": {
+    },
+    "Interpreten": {
+        "onLoad": "submenu_function_list_artists()",
         "submenus": {
-            "Interpreten": {
-                "onLoad": "submenu_function_list_artists()",
-                "submenus":{
-                    "Interpret": {
+            "Interpret": {
+                "type": "catchall",
+                "display": "none",
+                "onLoad": "submenu_function_display_artist(arguments);",
+                "submenus": {
+                    "Album": {
                         "type": "catchall",
                         "display": "none",
-                        "onLoad": "submenu_function_display_artist(arguments);",
-                        "submenus": {
-                            "Album": {
-                                "type": "catchall",
-                                "display": "none",
-                                "onLoad": "submenu_function_display_album(arguments);"
-                            }
-                        }
+                        "onLoad": "submenu_function_display_album(arguments);"
                     }
                 }
-            },
-            "Alben": {},
-            "Jahre": {},
-            "Genres": {}
+            }
         }
     },
-    "Filme": {
-        "subsonicMusicDirectory": "Filme"
-    },
-    "Serien": {
-        "subsonicMusicDirectory": "Serien"
-    },
-    "Podcasts": {
-    },
-    "Ausloggen": {
-        "onLoad": "perform_logout()"
-    },
+    "Genres": {},
     "Suche": {
         "display": "none"
     }

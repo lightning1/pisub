@@ -114,8 +114,16 @@ function updateMenu(){
 			if(user["active_path"].slice(0, 1)[0] == key)
 				tmp += " active";
 
-			// check for submenus
-			if(value["submenus"]){
+			// check for submenus and their amount
+            var count = 0;
+            if(value["submenus"]){
+                $.each(value["submenus"],function(key2,value2){
+                    // iterate over all submenus
+                    if(!value2["display"])
+                        count++;
+                });
+            }
+			if(count > 0){
 				tmp += " dropdown\">";
 				tmp += "<a href=\"#\" class=\"dropdown-toggle\" data-toggle=\"dropdown\"><span onClick=\"change_menu(new Array('" + key + "'));\">" + key + "</span> <b class=\"caret\"></b></a>";
 				tmp += "<ul class=\"dropdown-menu\">";
@@ -358,10 +366,10 @@ function display_pagination(pager_element, content_element, content){
 		$.each(value,function(key2,value2){
 			tmp += "<td>";
 			if(user["display_pagination_mode"] == "simple"){
-				tmp += "<a href=\"javascript:change_menu(['Musik','Interpreten','"+value2['name']+"'], {'artist_id': '"+value2['id']+"'});\">"+value2['name']+"</a>";
+				tmp += "<a href=\"javascript:change_menu(['Interpreten','"+value2['name']+"'], {'artist_id': '"+value2['id']+"'});\">"+value2['name']+"</a>";
 			} else {
 				tmp += "<div class\"media\">";
-				tmp += "<a class=\"pull-left\" href=\"#\">";
+				tmp += "<a class=\"pull-left\" href=\"javascript:change_menu(['Interpreten','"+value2['name']+"'], {'artist_id': '"+value2['id']+"'});\">";
 				if(value2['coverArt']){
 					tmp += "<img class=\"media-object img-thumbnail\" src=\"";
 					tmp += getRestUrl('getCoverArt','&size=50&id='+value2["coverArt"]);

@@ -36,7 +36,7 @@
 		<div id="notifications_login"></div>
       		<form class="form-signin">
 			<fieldset>
-        		<h2 class="form-signin-heading">Bootsub Login</h2>
+        		<h2 class="form-signin-heading">PiSub Login</h2>
 	                <input type="text" class="input-large form-control" placeholder="Subsonic-URL" id="form_signin_url" />
         		<input type="text" class="input-large form-control" placeholder="Username" id="form_signin_username" />
         		<input type="password" class="input-large form-control" placeholder="Password" id="form_signin_password" />
@@ -56,20 +56,20 @@
         		<div class="navbar navbar-default navbar-fixed-top" role="navigation">
           			<div class="navbar-inner">
             				<div class="container">
-	      					<a class="navbar-brand" href="#">Bootsub</a>
+	      					<a class="navbar-brand" href="#">PiSub</a>
               					<ul class="nav navbar-nav navbar-left" id="main_menu">
-      							<li class="dropdown"  id="navbar_Musik">
-        							<a href="#" class="dropdown-toggle" data-toggle="dropdown"><span onClick="change_menu('Musik','');">Musik</span> <b class="caret"></b></a>
-        							<ul class="dropdown-menu">
-          								<li><a href="javascript:change_menu('Musik','Interpreten');">Interpreten</a></li>
-          								<li><a href="#">Another action</a></li>
-          								<li><a href="#">Something else here</a></li>
-          								<li class="divider"></li>
-          								<li><a href="#">Separated link</a></li>
-          								<li class="divider"></li>
-          								<li><a href="#">One more separated link</a></li>
-        							</ul>
-      							</li>
+      							    <li class="dropdown"  id="navbar_Musik">
+        							    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span onClick="change_menu('Musik','');">Musik</span> <b class="caret"></b></a>
+        							    <ul class="dropdown-menu">
+          								    <li><a href="javascript:change_menu('Musik','Interpreten');">Interpreten</a></li>
+                                            <li><a href="#">Another action</a></li>
+                                            <li><a href="#">Something else here</a></li>
+                                            <li class="divider"></li>
+                                            <li><a href="#">Separated link</a></li>
+                                            <li class="divider"></li>
+                                            <li><a href="#">One more separated link</a></li>
+                                        </ul>
+      							    </li>
                 					<li id="navbar_Filme"><a href="javascript:change_menu('Filme','');">Filme</a></li>
                 					<li id="navbar_Serien"><a href="javascript:change_menu('Serien','');">Serien</a></li>
                 					<li id="navbar_Podcasts"><a href="javascript:change_menu('Podcasts','');">Podcasts</a></li>
@@ -91,9 +91,10 @@
 
 
 		<div>
-			<ol class="breadcrumb" id="main_breadcrumb">
-                        </ol>
+			<ol class="breadcrumb" id="main_breadcrumb"></ol>
 		</div>
+
+        <div id="container_Kluge-Mixe" class="bootsub_container"></div>
 
 		<div id="container_Musik" class="bootsub_container">
 			<h2>Musik</h2>
@@ -119,7 +120,7 @@
 			</table>
 		</div>
 
-		<div id="container_Musik_Interpreten" class="bootsub_container">
+		<div id="container_Interpreten" class="bootsub_container">
 			<div class="form-group">
 				<form>
 				<select class="input-medium" onChange="user['display_pagination_mode'] = this.value; set_local_storage(); submenu_function_list_artists();">
@@ -128,15 +129,15 @@
 				</select>
 				</form>
 			</div>
-			<div id="container_Musik_Interpreten_pager" style="margin:auto;"></div>
-			<div id="container_Musik_Interpreten_pagercontent"></div>
+			<div id="container_Interpreten_pager" style="margin:auto;"></div>
+			<div id="container_Interpreten_pagercontent"></div>
 		</div>
 
-        <div id="container_Musik_Interpreten_Interpret" class="bootsub_container">
+        <div id="container_Interpreten_Interpret" class="bootsub_container">
             <h2>Ein toller Interpret.</h2>
         </div>
 
-        <div id="container_Musik_Interpreten_Interpret_Album" class="bootsub_container">
+        <div id="container_Interpreten_Interpret_Album" class="bootsub_container">
             <h2>Ein tolles Album.</h2>
         </div>
 
@@ -158,8 +159,12 @@
 				</label>
 			</div>
 			<p><input type="text" class="input-large" /></p>
-        		<p><a class="btn btn-large btn-success" href="#">Suchen!</a></p>
-      		</div>
+        	<p><a class="btn btn-large btn-success" href="#">Suchen!</a></p>
+      	</div>
+
+        <div id="container_Genres" class="bootsub_container">
+            <h2>Genres</h2>
+        </div>
 
 		<div id="container_Filme" class="bootsub_container">
 		<h2>Filme</h2>
