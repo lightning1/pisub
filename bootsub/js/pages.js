@@ -12,20 +12,20 @@ function submenu_function_list_artists() {
         dataType: "jsonp",
         type: "GET"
     }).done(function(data) {
-        if (data["subsonic-response"]["status"] == "ok") {
+        if (data["subsonic-response"]["status"] === "ok") {
             var tmp = "";
 
             var artists = data["subsonic-response"]["artists"]["index"];
 
-            var lsorted_artistps = {};
+            var sorted_artists = {};
 
             $.each(artists, function(key, value) {
                 var t = "";
                 var c = {};
                 $.each(value, function(key2, value2) {
-                    if (key2 == "name")
+                    if (key2 === "name")
                         t = value2;
-                    else if (key2 == "artist")
+                    else if (key2 === "artist")
                         c = value2;
                 });
                 sorted_artists[t] = c;
