@@ -281,7 +281,7 @@ function submenu_function_display_klugemixes(params) {
             for (var i = 0; i < playlists.length; i++) {
                 if (playlists[i]["name"].substr(0, 9) == "Kluge-Mix") {
                     tmp += "<tr>";
-                    tmp += "<td><a href=\"#\" onClick=\"playPlaylist('" + playlists[i]['id'] + "');\">" + playlists[i]['name'] + "</a></td>";
+                    tmp += "<td><a href=\"#\" class=\"focusable\" onClick=\"playPlaylist('" + playlists[i]['id'] + "');\">" + playlists[i]['name'] + "</a></td>";
                     tmp += "<td>" + display_duration(playlists[i]['duration']) + "</td>";
                     tmp += "</tr>";
                 }
