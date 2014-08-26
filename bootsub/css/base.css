@@ -5,6 +5,9 @@ html {
 html, body {
     height: 100%;
 }
+body {
+	zoom: 2;
+}
 
 /* Wrapper for page content to push down footer */
 #wrap {
