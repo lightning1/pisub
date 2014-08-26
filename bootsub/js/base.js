@@ -113,7 +113,7 @@ function updateMenu(){
 		// key is the menu-name
 
 		if(!value["display"]){
-			tmp += "<li id=\"navbar_" + key + "\" class=\"focusable bootsub_navbar";
+			tmp += "<li id=\"navbar_" + key + "\" class=\"bootsub_navbar";
 			if(user["active_path"].slice(0, 1)[0] == key)
 				tmp += " active";
 
@@ -128,18 +128,18 @@ function updateMenu(){
             }
 			if(count > 0){
 				tmp += " dropdown\">";
-				tmp += "<a href=\"#\" class=\"dropdown-toggle\" data-toggle=\"dropdown\"><span onClick=\"change_menu(new Array('" + key + "'));\">" + key + "</span> <b class=\"caret\"></b></a>";
+				tmp += "<a href=\"#\" class=\"dropdown-toggle\" data-toggle=\"dropdown\"><span class=\"focusable\" onClick=\"change_menu(new Array('" + key + "'));\">" + key + "</span> <b class=\"caret\"></b></a>";
 				tmp += "<ul class=\"dropdown-menu\">";
 				$.each(value["submenus"],function(key2,value2){
 					// iterate over all submenus
 					if(!value2["display"])
-						tmp += "<li><a href=\"javascript:change_menu(new Array('" + key + "','" + key2 + "'));\">" + key2 + "</a></li>";
+						tmp += "<li><a href=\"#\" onClick=\"change_menu(new Array('" + key + "','" + key2 + "'));\" class=\"focusable\">" + key2 + "</a></li>";
 				});
 				tmp += "</ul>";
 			} else {
 				// no submenus present
 				tmp += "\">";
-				tmp += "<a href=\"javascript:change_menu(new Array('" + key + "'));\">" + key + "</a>";
+				tmp += "<a href=\"#\" onClick=\"change_menu(new Array('" + key + "'));\" class=\"focusable\">" + key + "</a>";
 			}
 
 			tmp += "</li>";
@@ -332,7 +332,7 @@ function updateBreadcrumb(){
     var depth = user["active_path"].length;
     for(var i=0; i<depth; i++){
         if(i+1 < depth)
-            tmp += "<li><a href=\"javascript:change_menu("+get_array_as_string(user["active_path"].slice(0,i+1))+");\">";
+            tmp += "<li><a href=\"#\" class=\"focusable\" onClick=\"change_menu("+get_array_as_string(user["active_path"].slice(0,i+1))+");\">";
         else
             tmp += "<li class=\"active\">";
         var akt_conf = get_menu_config(user["active_path"]);
@@ -358,7 +358,7 @@ function display_pagination(pager_element, content_element, content){
 	tmp_pager += "<ul class=\"pagination\" >";
 	var count = 0;
 	$.each(content,function(key,value){
-		tmp_pager += "<li id=\""+pager_element+"_"+count+"\"><a href=\"javascript:display_pagination_select_page('"+pager_element+"','"+content_element+"','"+count+"');\">" + key + "</a></li>";
+		tmp_pager += "<li id=\""+pager_element+"_"+count+"\"><a href=\"#\" class=\"focusable\" onClick=\"display_pagination_select_page('"+pager_element+"','"+content_element+"','"+count+"');\">" + key + "</a></li>";
 		tmp += "<div class=\"pagebrowser_content\" id=\""+content_element+"_"+count+"\" style=\"display:none;\">";
 		var width = 1000;
 		if($('#'+content_element).width() > width)
@@ -370,10 +370,10 @@ function display_pagination(pager_element, content_element, content){
 		$.each(value,function(key2,value2){
 			tmp += "<td>";
 			if(user["display_pagination_mode"] == "simple"){
-				tmp += "<a href=\"javascript:change_menu(['Interpreten','"+value2['name']+"'], {'artist_id': '"+value2['id']+"'});\">"+value2['name']+"</a>";
+				tmp += "<a href=\"#\" class=\"focusable\" onClick=\"change_menu(['Interpreten','"+value2['name']+"'], {'artist_id': '"+value2['id']+"'});\">"+value2['name']+"</a>";
 			} else {
 				tmp += "<div class\"media\">";
-				tmp += "<a class=\"pull-left focusable\" href=\"javascript:change_menu(['Interpreten','"+value2['name']+"'], {'artist_id': '"+value2['id']+"'});\">";
+				tmp += "<a class=\"pull-left focusable\" href=\"#\" onClick=\"change_menu(['Interpreten','"+value2['name']+"'], {'artist_id': '"+value2['id']+"'});\">";
 				if(value2['coverArt']){
 					tmp += "<img class=\"media-object img-thumbnail\" src=\"";
 					tmp += getRestUrl('getCoverArt','&size=50&id='+value2["coverArt"]);

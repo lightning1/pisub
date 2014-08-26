@@ -179,7 +179,7 @@ function submenu_function_display_artist(params) {
 
             for (var i = 0; i < alben.length; i++) {
                 tmp += "<div class=\"media\">";
-                tmp += "<a class=\"pull-left focusable\" href=\"javascript:playAlbum(";
+                tmp += "<a class=\"pull-left focusable\" href=\"#\" onClick=\"playAlbum(";
 //              tmp += "<a class=\"pull-left\" href=\"javascript:change_menu(['Interpreten','" + artist['name'] + "','" + alben[i]['name'] + "'],";
                 tmp += "{'artist_id': '" + artist['id'] + "', 'album_id': '" + alben[i]['id'] + "'});\">";
                 if (alben[i]['coverArt']) {
@@ -192,7 +192,7 @@ function submenu_function_display_artist(params) {
                 tmp += "</a>";
                 tmp += "<div class=\"media-body\">";
                 tmp += "<h4 class=\"media-heading\">";
-                tmp += "<a href=\"javascript:playAlbum(";
+                tmp += "<a href=\"#\" onClick=\"playAlbum(";
 //                tmp += "<a href=\"javascript:change_menu(['Interpreten','" + artist['name'] + "','" + alben[i]['name'] + "'],";
                 tmp += "{'artist_id': '" + artist['id'] + "', 'album_id': '" + alben[i]['id'] + "'});\">" + alben[i]['name'] + "</a>";
                 tmp += "</h4>";
@@ -275,13 +275,13 @@ function submenu_function_display_klugemixes(params) {
 
             tmp += "<table class=\"table\">";
             tmp += "<thead>";
-            tmp += "<tr><th>Name</th><th>Länge</th><th>Aktion</th></tr>";
+            tmp += "<tr><th>Name</th><th>Länge</th></tr>";
             tmp += "</thead>";
             tmp += "<tbody>";
             for (var i = 0; i < playlists.length; i++) {
                 if (playlists[i]["name"].substr(0, 9) == "Kluge-Mix") {
                     tmp += "<tr>";
-                    tmp += "<td><a href=\"javascript:playPlaylist('" + playlists[i]['id'] + "');\">" + playlists[i]['name'] + "</a></td>";
+                    tmp += "<td><a href=\"#\" onClick=\"playPlaylist('" + playlists[i]['id'] + "');\">" + playlists[i]['name'] + "</a></td>";
                     tmp += "<td>" + display_duration(playlists[i]['duration']) + "</td>";
                     tmp += "</tr>";
                 }
