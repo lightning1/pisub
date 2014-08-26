@@ -102,3 +102,9 @@ table {
     z-index: 100;
     text-align: center;
 }
+
+.focused {
+    border-color: red;
+    border-style: inset;
+    border-width: 5px;
+}

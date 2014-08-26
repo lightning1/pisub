@@ -113,7 +113,7 @@ function updateMenu(){
 		// key is the menu-name
 
 		if(!value["display"]){
-			tmp += "<li id=\"navbar_" + key + "\" class=\"bootsub_navbar";
+			tmp += "<li id=\"navbar_" + key + "\" class=\"focusable bootsub_navbar";
 			if(user["active_path"].slice(0, 1)[0] == key)
 				tmp += " active";
 
@@ -147,6 +147,7 @@ function updateMenu(){
 	});
 	
 	$('#main_menu').html(tmp);
+        resetNav();
 }
 
 
@@ -372,7 +373,7 @@ function display_pagination(pager_element, content_element, content){
 				tmp += "<a href=\"javascript:change_menu(['Interpreten','"+value2['name']+"'], {'artist_id': '"+value2['id']+"'});\">"+value2['name']+"</a>";
 			} else {
 				tmp += "<div class\"media\">";
-				tmp += "<a class=\"pull-left\" href=\"javascript:change_menu(['Interpreten','"+value2['name']+"'], {'artist_id': '"+value2['id']+"'});\">";
+				tmp += "<a class=\"pull-left focusable\" href=\"javascript:change_menu(['Interpreten','"+value2['name']+"'], {'artist_id': '"+value2['id']+"'});\">";
 				if(value2['coverArt']){
 					tmp += "<img class=\"media-object img-thumbnail\" src=\"";
 					tmp += getRestUrl('getCoverArt','&size=50&id='+value2["coverArt"]);
