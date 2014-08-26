@@ -179,9 +179,8 @@ function submenu_function_display_artist(params) {
 
             for (var i = 0; i < alben.length; i++) {
                 tmp += "<div class=\"media\">";
-                tmp += "<a class=\"pull-left focusable\" href=\"#\" onClick=\"playAlbum(";
-//              tmp += "<a class=\"pull-left\" href=\"javascript:change_menu(['Interpreten','" + artist['name'] + "','" + alben[i]['name'] + "'],";
-                tmp += "{'artist_id': '" + artist['id'] + "', 'album_id': '" + alben[i]['id'] + "'});\">";
+//                tmp += "<a class=\"pull-left focusable\" href=\"#\" onClick=\"playAlbum(";
+//                tmp += "{'artist_id': '" + artist['id'] + "', 'album_id': '" + alben[i]['id'] + "'});\">";
                 if (alben[i]['coverArt']) {
                     tmp += "<img class=\"media-object\" src=\"";
                     tmp += getRestUrl('getCoverArt', '&size=75&id=' + alben[i]['coverArt']);
@@ -189,11 +188,10 @@ function submenu_function_display_artist(params) {
                 } else {
                     tmp += "<div style=\"width:75px;height:75px;\" />";
                 }
-                tmp += "</a>";
+//                tmp += "</a>";
                 tmp += "<div class=\"media-body\">";
                 tmp += "<h4 class=\"media-heading\">";
-                tmp += "<a href=\"#\" onClick=\"playAlbum(";
-//                tmp += "<a href=\"javascript:change_menu(['Interpreten','" + artist['name'] + "','" + alben[i]['name'] + "'],";
+                tmp += "<a href=\"#\" class=\"focusable\" onClick=\"playAlbum(";
                 tmp += "{'artist_id': '" + artist['id'] + "', 'album_id': '" + alben[i]['id'] + "'});\">" + alben[i]['name'] + "</a>";
                 tmp += "</h4>";
                 tmp += "Songs: " + alben[i]['songCount'] + "<br />";

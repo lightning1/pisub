@@ -88,7 +88,6 @@ function setFocusedLeft() {
 
 function enterFocused(){
     getFocused().trigger("click");
-    resetNav();
 }
 
 $(function() {

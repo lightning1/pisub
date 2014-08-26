@@ -107,8 +107,49 @@ a span.glyphicon {
     text-align: center;
 }
 
+/*
 .focused {
-    border-color: red;
-    border-style: inset;
-    border-width: 5px;
+    background-color: rgba(129,0,0,0.7);
+    color: white;
+}
+*/
+
+/* priority stuff for pagination */
+.pagination a.focused {
+    background-color: rgba(129,0,0,0.7);
+    color: white;
+    border-color: rgba(129,0,0,0.7);
+}
+
+/* focus stuff for cover listing */
+a.focused img.img-thumbnail {
+    background-color: rgba(129,0,0,0.7);
+}
+
+/* focus stuff for navbar */
+li.bootsub_navbar a.focused {
+    background-color: rgba(129,0,0,0.7);
+    color: white;
+}
+li.bootsub_navbar.active a.focused {
+    background-color: rgba(85,0,0,0.7);
+    color: white;
+}
+
+/* focus stuff for lists */
+td a.focused {
+    color: rgba(129,0,0,1);
+}
+h4.media-heading a.focused {
+    color: rgba(129,0,0,1);
+}
+
+/* focus for breadcrumb */
+.breadcrumb a.focused {
+    color: rgba(129,0,0,1);
+}
+
+/* focus for player controls */
+#pause.focused, #skip.focused, #stop.focused {
+    background-color: rgba(129,0,0,0.7);
 }
