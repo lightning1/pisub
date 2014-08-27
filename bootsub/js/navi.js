@@ -5,18 +5,36 @@ function getFocused() {
 function setFocusedRight() {
     var o = getFocused();
     var r = o.get(0).getBoundingClientRect().left;
-    var other = $(".focusable");
+    var t = o.get(0).getBoundingClientRect().top;
     var mr = 10000, no = null;
 
+    // first: search on same level
+    var other = $(".focusable").filter(":visible");
     other.each(function(i) {
         // console.log(o);
         var o = other.get(i);
         var nr = o.getBoundingClientRect().left;
-        if (nr > r && nr < mr) {
+        var nt = o.getBoundingClientRect().top;
+        if (nr > r && nr < mr && nt == t) {
             mr = nr;
             no = o;
         }
     });
+    if(no == null){
+        // second: search on lower level
+        r = 0;
+        other = $(".focusable").filter(":visible");
+        other.each(function(i) {
+            // console.log(o);
+            var o = other.get(i);
+            var nr = o.getBoundingClientRect().left;
+            var nt = o.getBoundingClientRect().top;
+            if (nr > r && nr < mr && nt > t) {
+                mr = nr;
+                no = o;
+            }
+        });
+    }
 
     if (no) {
         setNav($(no));
@@ -26,18 +44,33 @@ function setFocusedRight() {
 function setFocusedDown() {
     var o = getFocused();
     var r = o.get(0).getBoundingClientRect().top;
-    var other = $(".focusable");
+    var t = o.get(0).getBoundingClientRect().left;
     var mr = 100000, no = null;
 
+    // first: check for same level
+    var other = $(".focusable").filter(":visible");
     other.each(function(i) {
         // console.log(o);
         var o = other.get(i);
         var nr = o.getBoundingClientRect().top;
-        if (nr > r + 5 && nr < mr) {
+        var nt = o.getBoundingClientRect().left;
+        if (nr > r + 5 && nr < mr && nt == t) {
             mr = nr;
             no = o;
         }
     });
+    if (no == null){
+        var other = $(".focusable").filter(":visible");
+        other.each(function(i) {
+            // console.log(o);
+            var o = other.get(i);
+            var nr = o.getBoundingClientRect().top;
+            if (nr > r + 5 && nr < mr) {
+                mr = nr;
+                no = o;
+            }
+        });
+    }
 
     if (no) {
         setNav($(no));
@@ -47,18 +80,32 @@ function setFocusedDown() {
 function setFocusedUp() {
     var o = getFocused();
     var r = o.get(0).getBoundingClientRect().top;
-    var other = $(".focusable");
+    var t = o.get(0).getBoundingClientRect().left;
     var mr = -100, no = null;
 
+    var other = $(".focusable").filter(":visible");
     other.each(function(i) {
         // console.log(o);
         var o = other.get(i);
         var nr = o.getBoundingClientRect().top;
-        if (nr < r && nr > mr) {
+        var nt = o.getBoundingClientRect().left;
+        if (nr < r && nr > mr && nt == t) {
             mr = nr;
             no = o;
         }
     });
+    if(no == null){
+        var other = $(".focusable").filter(":visible");
+        other.each(function(i) {
+            // console.log(o);
+            var o = other.get(i);
+            var nr = o.getBoundingClientRect().top;
+            if (nr < r && nr > mr) {
+                mr = nr;
+                no = o;
+            }
+        });
+    }
 
     if (no) {
         setNav($(no));
@@ -68,18 +115,36 @@ function setFocusedUp() {
 function setFocusedLeft() {
     var o = getFocused();
     var r = o.get(0).getBoundingClientRect().left;
-    var other = $(".focusable");
+    var t = o.get(0).getBoundingClientRect().top;
     var mr = -100, no = null;
 
+    // first: search on same level
+    var other = $(".focusable").filter(":visible");
     other.each(function(i) {
         // console.log(o);
         var o = other.get(i);
         var nr = o.getBoundingClientRect().left;
-        if (nr < r && nr > mr) {
+        var nt = o.getBoundingClientRect().top;
+        if (nr < r && nr > mr && nt == t) {
             mr = nr;
             no = o;
         }
     });
+    if (no == null){
+        // second: search upper level
+        var other = $(".focusable").filter(":visible");
+        r = 100000;
+        other.each(function(i) {
+            // console.log(o);
+            var o = other.get(i);
+            var nr = o.getBoundingClientRect().left;
+            var nt = o.getBoundingClientRect().top;
+            if (nr < r && nr > mr && nt < t) {
+                mr = nr;
+                no = o;
+            }
+        });
+    }
 
     if (no) {
         setNav($(no));
