@@ -77,9 +77,7 @@ function bootsub_init(){
     if(user["autologin"] == "yes"){
          perform_login();
     }
-    setTimeout(function(){
-		$(".focusable").first().focus();
-	}, 500);
+    setTimeout(resetNav, 1000);
 }
 
 function get_menu_config(menu_path){

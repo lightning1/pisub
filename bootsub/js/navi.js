@@ -189,11 +189,11 @@ $(function() {
     });
 });
 
+function resetNav(){
+	setNav($(".focusable").filter(":visible").first());
+}
+
 function setNav(o) {
     $(".focusable").removeClass("focused");
     o.addClass("focused");
-}
-
-function resetNav() {
-    setNav($(".focusable").first());
 }
