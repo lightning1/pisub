@@ -50,9 +50,9 @@ function get_local_storage(){
     for(var i=0; i < localStorage.length; i++){
         var k = localStorage.key(i);
         var p = localStorage.getItem(k);
-        if(p.indexOf("|")==-1 && k != "active_path" && k != "active_arguments")
+        if(p && p.indexOf("|")==-1 && k != "active_path" && k != "active_arguments")
             user[k] = p;
-        else
+        else if(p)
             user[k] = p.split("|");
     }
 }
