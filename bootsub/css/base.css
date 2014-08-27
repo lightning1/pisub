@@ -151,6 +151,6 @@ h4.media-heading a.focused {
 }
 
 /* focus for player controls */
-#pause.focused, #skip.focused, #stop.focused {
+#pause.focused, #return.focused, #skip.focused, #stop.focused {
     background-color: rgba(129,0,0,0.7);
 }
