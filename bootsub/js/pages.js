@@ -59,6 +59,7 @@ function player_init() {
     $("#stop").click(function() {
         stopPlayer();
     });
+	document.documentElement.webkitRequestFullscreen()
 }
 
 function startPlayer() {
