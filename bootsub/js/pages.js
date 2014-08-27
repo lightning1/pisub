@@ -93,7 +93,7 @@ function player_init() {
 function startPlayer() {
     $("#wrap").fadeOut();
     $("#player").fadeIn();
-    var s = "<tr><th style='width: 50px;'>Nummer</th><th>Name</th></tr>";
+    var s = "<tr><th style='width: 50px;'>#</th><th>Titel</th></tr>";
     var i = 1;
     playList.forEach(function(o) {
         s += "<tr id='p" + o.id + "' class='playlistitem'><td>" + i + "</td><td>" + o.title + "</td></tr>";
@@ -283,6 +283,16 @@ function submenu_function_display_album(params) {
     });
 }
 
+function compare_klugemixes(a, b){
+    if (a['name'] < b['name']){
+        return -1;
+    }
+    if (a['name'] > b['name']){
+        return 1;
+    }
+    return 0;
+}
+
 /* Here comes the view for the Kluge-Mixes */
 function submenu_function_display_klugemixes(params) {
     mutex = true;
@@ -299,6 +309,7 @@ function submenu_function_display_klugemixes(params) {
             if (!$.isArray(playlists)) {
                 playlists = [playlists];
             }
+            playlists.sort(compare_klugemixes);
 
             tmp += "<table class=\"table\">";
             tmp += "<thead>";
