@@ -9,6 +9,7 @@ var playList = []; // {"id": "xxx", "title": "xxx", "author": "xxx"}
 var playBack = []; // {"id": "xxx", "title": "xxx", "author": "xxx"}
 var currentlyPlaying = null;
 var isPaused = false;
+var playListTitle = "Kluge-Mix";
 
 function stopPlayer() {
     $("#player").fadeOut();
@@ -93,10 +94,10 @@ function player_init() {
 function startPlayer() {
     $("#wrap").fadeOut();
     $("#player").fadeIn();
-    var s = "<tr><th style='width: 50px;'>#</th><th>Titel</th></tr>";
+    var s = "<tr><th colspan=\"2\">" + playListTitle + "</th></tr>";
     var i = 1;
     playList.forEach(function(o) {
-        s += "<tr id='p" + o.id + "' class='playlistitem'><td>" + i + "</td><td>" + o.title + "</td></tr>";
+        s += "<tr id='p" + o.id + "' class='playlistitem'><td  style='width: 50px;text-align:right;'>" + i + "</td><td>" + o.title + "</td></tr>";
         i++;
     });
 
@@ -118,6 +119,7 @@ function playPlaylist(id) {
             playList = entry.filter(function(e) {
                 return {"id": e.id, "title": e.title, "author": e.artist};
             });
+            playListTitle = list["name"];
             startPlayer();
         } else {
             display_subsonic_response(data['subsonic-response']);
@@ -140,6 +142,7 @@ function playAlbum(o) {
             playList = entry.filter(function(e) {
                 return {"id": e.id, "title": e.title, "author": e.artist};
             });
+            playListTitle = list["name"];
             startPlayer();
         } else {
             display_subsonic_response(data['subsonic-response']);
