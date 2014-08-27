@@ -108,6 +108,11 @@ a span.glyphicon {
     text-align: center;
 }
 
+th.playlist_duration, td.playlist_duration {
+    width: 60px;
+    text-align: right;
+}
+
 /*
 .focused {
     background-color: rgba(129,0,0,0.7);

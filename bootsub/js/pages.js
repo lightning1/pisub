@@ -199,8 +199,6 @@ function submenu_function_display_artist(params) {
 
             var artist = data["subsonic-response"]["artist"];
 
-            console.log(artist);
-
             var alben = new Array();
 
             if (artist["albumCount"] == "1") {
@@ -316,14 +314,14 @@ function submenu_function_display_klugemixes(params) {
 
             tmp += "<table class=\"table\">";
             tmp += "<thead>";
-            tmp += "<tr><th>Name</th><th>Länge</th></tr>";
+            tmp += "<tr><th>Name</th><th class=\"playlist_duration\">Länge</th></tr>";
             tmp += "</thead>";
             tmp += "<tbody>";
             for (var i = 0; i < playlists.length; i++) {
                 if (playlists[i]["name"].substr(0, 9) == "Kluge-Mix") {
                     tmp += "<tr>";
                     tmp += "<td><a href=\"#\" class=\"focusable\" onClick=\"playPlaylist('" + playlists[i]['id'] + "');\">" + playlists[i]['name'] + "</a></td>";
-                    tmp += "<td>" + display_duration(playlists[i]['duration']) + "</td>";
+                    tmp += "<td class=\"playlist_duration\">" + display_duration(playlists[i]['duration']) + "</td>";
                     tmp += "</tr>";
                 }
             }

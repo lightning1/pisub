@@ -196,4 +196,13 @@ function resetNav(){
 function setNav(o) {
     $(".focusable").removeClass("focused");
     o.addClass("focused");
+    var new_top = o.offset();
+    if(new_top){
+        // check for invisibility
+        if(new_top.top + o.height() > $(window).height()){
+            $.scrollTo(new_top.top + ($(window).height() / 2));
+        } else if(new_top.top < 400){
+            $.scrollTo(0);
+        }
+    }
 }
