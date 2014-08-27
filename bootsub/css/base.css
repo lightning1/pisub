@@ -1,6 +1,7 @@
 /* always display scrollbar to reduce possible glitches related to the jquery-content-changing */
 html {
     overflow-y: scroll;
+zoom: 1.5;
 }
 html, body {
     height: 100%;
