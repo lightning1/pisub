@@ -6,6 +6,7 @@
  */
 
 var playList = []; // {"id": "xxx", "title": "xxx", "author": "xxx"}
+var playBack = []; // {"id": "xxx", "title": "xxx", "author": "xxx"}
 var currentlyPlaying = null;
 var isPaused = false;
 
@@ -19,7 +20,31 @@ function stopPlayer() {
     isPaused = false;
 }
 
+function startLastSong(){
+    playList.unshift(currentlyPlaying);
+    currentlyPlaying = playBack.shift();
+    if(!currentlyPlaying){
+        stopPlayer();
+        return;
+    }
+    var audioElement = $("#audio").get(0);
+    $("#cover").attr("src", getRestUrl("getCoverArt", "&id=" + currentlyPlaying.id));
+    $("#curtitle").text(currentlyPlaying.title);
+    $("#curartist").text(currentlyPlaying.artist);
+    setTimeout(function(){
+        $(".playlistitem").removeClass("danger");
+        $("#p" + currentlyPlaying.id).addClass("danger");
+    }, 5);
+    audioElement.autoplay = true;
+    audioElement.src = getRestUrl("stream", "&id=" + currentlyPlaying.id + "&format=ogg&estimateContentLength=true");
+    audioElement.play();
+    $("#audio").one("ended", function() {
+        startNextSong();
+    });
+}
+
 function startNextSong() {
+    playBack.unshift(currentlyPlaying);
     currentlyPlaying = playList.shift();
     if (!currentlyPlaying) {
         stopPlayer();
@@ -55,6 +80,9 @@ function player_init() {
     });
     $("#skip").click(function() {
         startNextSong();
+    });
+    $("#return").click(function() {
+        startLastSong();
     });
     $("#stop").click(function() {
         stopPlayer();
