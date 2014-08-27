@@ -158,15 +158,33 @@ function enterFocused(){
 $(function() {
     $(document).keydown(function(e) {
         if (e.keyCode === 39) {
+            // rechte Pfeiltaste
             setFocusedRight(); e.preventDefault();
         } else if (e.keyCode === 37) {
+            // linke Pfeiltaste
             setFocusedLeft(); e.preventDefault();
         } else if (e.keyCode === 38) {
+            // Pfeiltaste nach oben
             setFocusedUp(); e.preventDefault();
         } else if (e.keyCode === 40) {
+            // Pfeiltaste nach unten
             setFocusedDown(); e.preventDefault();
         } else if (e.keyCode === 13) {
+            // ENTER!
             enterFocused(); e.preventDefault();
+        } else if (e.keyCode === 87){
+            // ESC
+            change_menu(new Array('Kluge-Mixe'));
+        } else if (e.keyCode === 39){
+            // next track
+            startNextSong();
+        } else if (e.keyCode === 8){
+            // backspace
+            change_menu(new Array('Kluge-Mixe'));
+        } else if (e.keyCode === 33){
+            // page up
+        } else if (e.keyCode === 34){
+            // backspace
         }
     });
 });
